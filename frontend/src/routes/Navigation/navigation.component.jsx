@@ -18,7 +18,7 @@ const Navigation = () => {
               Explore
             </a>
             {auth.isLoggedIn && (
-              <a href="#pricing" class="nav-link">
+              <a href="/appliedJobs" class="nav-link">
                 Applied Jobs
               </a>
             )}
@@ -34,7 +34,7 @@ const Navigation = () => {
               </a>
             )}
             {auth.isLoggedIn && (
-              <a href="/auth" class="contact-button">
+              <a href="/" onClick={auth.logout} class="contact-button">
                 Log Out
               </a>
             )}

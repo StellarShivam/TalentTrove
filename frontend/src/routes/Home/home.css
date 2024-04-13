@@ -63,7 +63,7 @@
   border: none;
   border-radius: 0.375rem;
   background-color: var(--primary-color);
-  color: var(--background-color);
+  color: white;
   transform: all 0.1s;
   padding: 0.75rem 1.5rem;
   font-size: 1rem;
@@ -297,6 +297,7 @@
   gap: 2rem;
 }
 .testimonial-title {
+  color: var(--primary-color);
   font-size: 1.875rem;
   font-weight: bold;
 }
@@ -330,7 +331,7 @@
 }
 
 .testimonial-text {
-  color: #555;
+  color: white;
   font-size: 0.875rem;
 }
 

@@ -4,6 +4,10 @@ import Modal from "../../components/modal/modal.component";
 import Number from "../../components/AnimatedNumber/number.component";
 import axios from "axios";
 import "./jobs.css";
+import InstaIcon from "../../images/instagram.svg";
+import TwitterIcon from "../../images/twitter.svg";
+import LinkedInIcon from "../../images/linkedin.svg";
+import MicrosoftIcon from "../../images/Microsoft.svg";
 
 const BUTTON_WRAPPER_STYLES = {
   position: "relative",
@@ -11,6 +15,7 @@ const BUTTON_WRAPPER_STYLES = {
 };
 
 const Jobs = () => {
+  const [currentPage, setCurrentPage] = useState(1);
   const [title, setTitle] = useState("");
   const [city, setCity] = useState("");
   const [jobs, setJobs] = useState([]);
@@ -20,6 +25,13 @@ const Jobs = () => {
   const [displayJob, setDisplayJob] = useState(false);
 
   const [isOpen, setIsOpen] = useState(false);
+
+  const recordsPerPage = 12;
+  const lastIndex = currentPage * recordsPerPage;
+  const firstIndex = lastIndex - recordsPerPage;
+  const records = jobs.slice(firstIndex, lastIndex);
+  const npage = Math.ceil(jobs.length / recordsPerPage);
+  const numbers = [...Array(npage + 1).keys()].slice(1);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -53,6 +65,7 @@ const Jobs = () => {
       `http://localhost:3002/api/jobs/${title}/${locationString}/${jobTypeString}`
     );
     setJobs(data.jobs);
+    setCurrentPage(1);
   };
 
   const handleJobTypeFilter = async (e) => {
@@ -77,6 +90,7 @@ const Jobs = () => {
       `http://localhost:3002/api/jobs/${title}/${locationString}/${jobTypeString}`
     );
     setJobs(data.jobs);
+    setCurrentPage(1);
   };
 
   const handleClick = async () => {
@@ -94,6 +108,23 @@ const Jobs = () => {
     // setTitle("");
     setJobs(data.jobs);
     setDisplayJob(true);
+    setCurrentPage(1);
+  };
+
+  const handlePrevPagination = () => {
+    if (currentPage === 1) {
+      setCurrentPage(npage);
+    } else {
+      setCurrentPage(currentPage - 1);
+    }
+  };
+
+  const handleNextPagination = () => {
+    if (currentPage === npage) {
+      setCurrentPage(1);
+    } else {
+      setCurrentPage(currentPage + 1);
+    }
   };
 
   return (
@@ -278,7 +309,7 @@ const Jobs = () => {
             </div>
             <div class="jobs-listings">
               {jobs.length > 0 &&
-                jobs.map((job) => (
+                records.map((job) => (
                   <div class="job-container">
                     <div class="job-brefing">
                       <div class="job-heading">
@@ -322,9 +353,154 @@ const Jobs = () => {
                   </div>
                 </div>
               )}
+              {jobs.length > 0 && (
+                <div className="pagination">
+                  <button onClick={handlePrevPagination}>Prev</button>
+                  <p>{currentPage}</p>
+                  <p> of </p>
+                  <p>{npage}</p>
+                  <button onClick={handleNextPagination}>Next</button>
+                </div>
+              )}
             </div>
           </section>
         )}
+      </div>
+      <div class="footer-container">
+        <footer class="footer">
+          <div class="footer-top">
+            <div class="comp-logo">
+              <a class="logo-link" href="#home">
+                TalentTrove
+              </a>
+            </div>
+            <p class="filler-text">Seamless Learning for Brighter Futures.</p>
+            <div class="social">
+              <a class="social-link" href="#instagram">
+                <img alt="icon" src={InstaIcon} class="social-icon" />
+              </a>
+              <a href="#linkedin" class="social-link">
+                <img alt="icon" src={LinkedInIcon} class="social-icon" />
+              </a>
+              <a href="#microsoft" class="social-link">
+                <img alt="icon" src={MicrosoftIcon} class="social-icon" />
+              </a>
+              <a href="#twitter" class="social-link">
+                <img alt="icon" src={TwitterIcon} class="social-icon" />
+              </a>
+            </div>
+          </div>
+
+          <div class="footer-grid">
+            {/* <!-- column 1 --> */}
+            <div class="footer-grid-column">
+              <div class="footer-grid-heading">Products</div>
+              <ul class="footer-links-list">
+                <li>
+                  <a href="#overview" class="footer-link">
+                    Overview
+                  </a>
+                </li>
+                <li>
+                  <a href="#overview" class="footer-link">
+                    Solutions
+                  </a>
+                </li>
+                <li>
+                  <a href="#overview" class="footer-link">
+                    Pricing
+                  </a>
+                </li>
+                <li>
+                  <a href="#overview" class="footer-link">
+                    Customers
+                  </a>
+                </li>
+              </ul>
+            </div>
+            {/* <!-- column 2 --> */}
+            <div class="footer-grid-column">
+              <div class="footer-grid-heading">Company</div>
+              <ul class="footer-links-list">
+                <li>
+                  <a href="#overview" class="footer-link">
+                    About
+                  </a>
+                </li>
+                <li>
+                  <a href="#overview" class="footer-link">
+                    Investor Relations
+                  </a>
+                </li>
+                <li>
+                  <a href="#overview" class="footer-link">
+                    Jobs
+                  </a>
+                </li>
+                <li>
+                  <a href="#overview" class="footer-link">
+                    Press
+                  </a>
+                </li>
+                <li>
+                  <a href="#overview" class="footer-link">
+                    Blog
+                  </a>
+                </li>
+              </ul>
+            </div>
+            {/* <!-- column 3 --> */}
+            <div class="footer-grid-column">
+              <div class="footer-grid-heading">Support</div>
+              <ul class="footer-links-list">
+                <li>
+                  <a href="#overview" class="footer-link">
+                    Contact
+                  </a>
+                </li>
+                <li>
+                  <a href="#overview" class="footer-link">
+                    Documentation
+                  </a>
+                </li>
+                <li>
+                  <a href="#overview" class="footer-link">
+                    Chat
+                  </a>
+                </li>
+                <li>
+                  <a href="#overview" class="footer-link">
+                    FAQ
+                  </a>
+                </li>
+              </ul>
+            </div>
+
+            <div class="footer-grid-column">
+              <div class="footer-grid-heading">Legal</div>
+              <ul class="footer-links-list">
+                <li>
+                  <a href="#overview" class="footer-link">
+                    Terms of Service
+                  </a>
+                </li>
+                <li>
+                  <a href="#overview" class="footer-link">
+                    Privacy Policy
+                  </a>
+                </li>
+                <li>
+                  <a href="#overview" class="footer-link">
+                    Cookie Settings
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </footer>
+        <div class="footer-copyright">
+          © 2024 - Present TalentTrove. All rights reserved.
+        </div>
       </div>
     </>
   );

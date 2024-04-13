@@ -1,11 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Outlet, useParams } from "react-router-dom";
 import axios from "axios";
 import "./jobDesc.css";
+import { AuthContext } from "../../context/auth-context";
 
 const JobDesc = () => {
+  const auth = useContext(AuthContext);
   const jobId = useParams().jobId;
   const [jobData, setJobData] = useState({});
+  const [applyed, setApplyed] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -17,6 +20,28 @@ const JobDesc = () => {
     };
     fetchData();
   }, []);
+
+  const handleApply = async () => {
+    try {
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + auth.token,
+        },
+      };
+      const { data } = await axios.post(
+        `http://localhost:3002/api/jobs/addToAppliedJob`,
+        {
+          jobTitle: jobData.jobTitle,
+          companyName: jobData.companyName,
+          location: jobData.location,
+          jobType: jobData.jobType,
+          applyLink: jobData.applyLink,
+        },
+        config
+      );
+    } catch (e) {}
+  };
 
   return (
     <>
@@ -48,10 +73,10 @@ const JobDesc = () => {
               >
                 Apply Now
               </a>
-              <p>Already Applied??</p>
-              <button>
-                <i class="fa-solid fa-check"></i>
-              </button>
+              {applyed && <p>Already Applied??</p>}
+              <a onClick={handleApply} class="contact-button">
+                Applied
+              </a>
               <h3>Job Description</h3>
               <p>{jobData.jobDescription}</p>
             </div>

@@ -1,0 +1,39 @@
+.job-applied {
+  font-size: 0.9rem;
+  font-weight: 400;
+  color: var(--gray);
+}
+
+.fa-snowflake {
+  padding-right: 7px;
+}
+.applied-job-container {
+  border: 1px solid var(--gray);
+  display: flex;
+  /* flex-direction: column; */
+  justify-content: space-between;
+  height: 16rem;
+  width: 28rem;
+  border-radius: 0.2rem;
+  margin-left: 1rem;
+  box-shadow: 0 6px 12px #e7e7e7;
+  border: none;
+  background-color: white;
+}
+
+.job-status {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--gray);
+}
+
+.job-status > span {
+  color: #2196f3;
+}
+
+.applied-job-box {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  width: fit-content;
+  gap: 1rem;
+}

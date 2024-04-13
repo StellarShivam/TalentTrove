@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Outlet } from "react-router-dom";
 import PhoneImage from "../../images/phones.png";
 import Icon from "../../images/PersonalizedLearn.svg";
@@ -7,8 +7,10 @@ import TwitterIcon from "../../images/twitter.svg";
 import LinkedInIcon from "../../images/linkedin.svg";
 import MicrosoftIcon from "../../images/Microsoft.svg";
 import "./home.css";
+import { AuthContext } from "../../context/auth-context";
 
 const Home = () => {
+  const auth = useContext(AuthContext);
   return (
     <>
       <Outlet />
@@ -25,7 +27,10 @@ const Home = () => {
               true potential.
             </p>
             <div class="button-group">
-              <a href="/jobs" class="start-button">
+              <a
+                href={auth.isLoggedIn ? "/jobs" : "/auth"}
+                class="start-button"
+              >
                 Find a Job
               </a>
             </div>
@@ -140,43 +145,46 @@ const Home = () => {
             {/* <!-- card 1 --> */}
             <div class="testimonial-card">
               <div class="testimonial-text">
-                “Lorem, ipsum dolor sit amet consectetur adipisicing elit. Nobis
-                ut sed fuga!”
+                "TalentTrove streamlines job hunting with personalized listings
+                and expert resources, leading to swift career advancements for
+                users."
               </div>
               <div class="testimonial-avatar">
                 <img alt="avatar" src={require("../../images/avatar1.png")} />
               </div>
               <div class="testimonial-details">
                 <h3 class="testimonial-name">Sarah Johnson</h3>
-                <p class="testimonial-desc">Lorem ipsum dolor sit.</p>
+                <p class="testimonial-desc">SDE at Microsoft</p>
               </div>
             </div>
             {/* <!-- card 2 --> */}
             <div class="testimonial-card">
               <div class="testimonial-text">
-                “Lorem ipsum dolor sit amet consectetur adipisicing elit. Labore
-                accusantium distinctio natus!”
+                “TalentTrove stands out with its intuitive interface and
+                proactive matching, making job search efficient and rewarding
+                for all users.”
               </div>
               <div class="testimonial-avatar">
                 <img alt="avatar" src={require("../../images/avatar2.png")} />
               </div>
               <div class="testimonial-details">
-                <h3 class="testimonial-name">Sarah Johnson</h3>
-                <p class="testimonial-desc">Lorem ipsum dolor sit.</p>
+                <h3 class="testimonial-name">Micahel Hussey</h3>
+                <p class="testimonial-desc">SDE at Google</p>
               </div>
             </div>
             {/* <!-- card 3 --> */}
             <div class="testimonial-card">
               <div class="testimonial-text">
-                “Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eaque
-                maiores reiciendis repudiandae?”
+                “Experience seamless job hunting with TalentTrove's tailored
+                recommendations and supportive resources, ensuring your career
+                goals are within reach.”
               </div>
               <div class="testimonial-avatar">
                 <img alt="avatar" src={require("../../images/avatar3.png")} />
               </div>
               <div class="testimonial-details">
-                <h3 class="testimonial-name">Sarah Johnson</h3>
-                <p class="testimonial-desc">Lorem ipsum dolor sit.</p>
+                <h3 class="testimonial-name">Andre Burger</h3>
+                <p class="testimonial-desc">SDE at Meta</p>
               </div>
             </div>
           </div>

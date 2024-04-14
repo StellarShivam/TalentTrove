@@ -1,5 +1,8 @@
 import React from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
+
+import "react-toastify/dist/ReactToastify.css";
 
 import Navigation from "./routes/Navigation/navigation.component";
 import Home from "./routes/Home/home.component";
@@ -11,16 +14,19 @@ import JobDesc from "./routes/Jobs/jobDesc.component";
 
 const App = () => {
   return (
-    <Routes>
-      <Route path="/" element={<Navigation />}>
-        <Route index element={<Home />} />
-        <Route path="auth" element={<Authentication />} />
-        <Route path="jobs" element={<Jobs />} />
-        <Route path="appliedJobs" element={<AppliedJobs />} />
-        <Route path="jobdesc/:jobId" element={<JobDesc />} />
-        <Route path="*" element={<Navigate replace to="/" />} />
-      </Route>
-    </Routes>
+    <>
+      <Routes>
+        <Route path="/" element={<Navigation />}>
+          <Route index element={<Home />} />
+          <Route path="auth" element={<Authentication />} />
+          <Route path="jobs" element={<Jobs />} />
+          <Route path="appliedJobs" element={<AppliedJobs />} />
+          <Route path="jobdesc/:jobId" element={<JobDesc />} />
+          <Route path="*" element={<Navigate replace to="/" />} />
+        </Route>
+      </Routes>
+      <ToastContainer style={{ width: "22rem" }} />
+    </>
   );
 };
 

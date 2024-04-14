@@ -53,6 +53,10 @@ button {
   transition: 0.4s;
 }
 
+button.control:hover {
+  background-color: #5074f8;
+}
+
 button.control {
   cursor: pointer;
   width: 100%;

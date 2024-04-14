@@ -1,21 +1,35 @@
 const User = require("../models/userModel");
 const bcrypt = require("bcryptjs");
+const { validationResult } = require("express-validator");
 const generateToken = require("../config/generateToken");
+const HttpError = require("../models/http-error");
 
 exports.registerUser = (req, res, next) => {
+  const errors = validationResult(req);
+  // console.log(errors.errors);
+  if (!errors.isEmpty()) {
+    return next(
+      new HttpError(
+        "Invalid inputs passed, please check your email and password must be greater than 6.",
+        422
+      )
+    );
+  }
+
   const { email, password } = req.body;
 
   if (!email || !password) {
-    res.status(400);
-    throw new Error("Please enter all required fields");
+    return next(new HttpError("Please enter all required fields", 400));
   }
 
   User.findOne({ email: email })
     .then((user) => {
       if (user) {
-        const error = new Error("No such user found");
-        error.statusCode = 401;
-        throw error;
+        const error = new HttpError(
+          "User exists already, please login instead.",
+          422
+        );
+        return next(error);
       }
       bcrypt
         .hash(password, 12)
@@ -34,15 +48,19 @@ exports.registerUser = (req, res, next) => {
           });
         })
         .catch((err) => {
-          res
-            .status(err.statusCode || 500)
-            .json({ message: err.message, data: err.data });
+          const error = new HttpError(
+            "Could not create user,please try again.",
+            500
+          );
+          return next(error);
         });
     })
     .catch((err) => {
-      res
-        .status(err.statusCode || 500)
-        .json({ message: err.message, data: err.data });
+      const error = new HttpError(
+        "Could not create user,please try again.",
+        500
+      );
+      return next(error);
     });
 };
 
@@ -52,18 +70,22 @@ exports.authUser = (req, res, next) => {
   User.findOne({ email: email })
     .then((user) => {
       if (!user) {
-        const error = new Error("No such user found");
-        error.statusCode = 401;
-        throw error;
+        const error = new HttpError(
+          "Invalid credentials, could not log you in.",
+          401
+        );
+        return next(error);
       }
       loadedUser = user;
       return bcrypt.compare(password, user.password);
     })
     .then((isEqual) => {
       if (!isEqual) {
-        const error = new Error("Wrong Password.");
-        error.statusCode = 401;
-        throw error;
+        const error = new HttpError(
+          "Invalid credentials, could not log you in.",
+          401
+        );
+        return next(error);
       }
       res.json({
         userId: loadedUser._id,
@@ -72,8 +94,7 @@ exports.authUser = (req, res, next) => {
       });
     })
     .catch((err) => {
-      res
-        .status(err.statusCode || 500)
-        .json({ message: err.message, data: err.data });
+      const error = new HttpError("Logging in failed, please try again.", 500);
+      return next(error);
     });
 };

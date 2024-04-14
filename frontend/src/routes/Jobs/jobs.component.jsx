@@ -1,5 +1,9 @@
 import React from "react";
 import { useState, useEffect } from "react";
+import { ToastContainer, toast } from "react-toastify";
+
+import "react-toastify/dist/ReactToastify.css";
+
 import Modal from "../../components/modal/modal.component";
 import Number from "../../components/AnimatedNumber/number.component";
 import axios from "axios";
@@ -61,11 +65,14 @@ const Jobs = () => {
       jobTypeString = "-";
     }
 
-    const { data } = await axios.get(
-      `http://localhost:3002/api/jobs/${title}/${locationString}/${jobTypeString}`
-    );
-    setJobs(data.jobs);
-    setCurrentPage(1);
+    try {
+      const { data } = await axios.get(
+        `http://localhost:3002/api/jobs/${title}/${locationString}/${jobTypeString}`
+      );
+      setJobs(data.jobs);
+
+      setCurrentPage(1);
+    } catch (e) {}
   };
 
   const handleJobTypeFilter = async (e) => {
@@ -102,13 +109,30 @@ const Jobs = () => {
       URL = `http://localhost:3002/api/jobs/${title}/-/-`;
     }
     console.log(title, city);
-    const { data } = await axios.get(URL);
+    try {
+      const id = toast.loading("Please wait...");
+      const { data } = await axios.get(URL);
+
+      setJobs(data.jobs);
+      toast.update(id, {
+        render: "Jobs listed Successfully",
+        type: "success",
+        isLoading: false,
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+      });
+      setDisplayJob(true);
+      setCurrentPage(1);
+    } catch (e) {}
 
     // setCity("");
     // setTitle("");
-    setJobs(data.jobs);
-    setDisplayJob(true);
-    setCurrentPage(1);
   };
 
   const handlePrevPagination = () => {

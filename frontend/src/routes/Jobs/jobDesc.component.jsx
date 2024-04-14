@@ -1,5 +1,9 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Outlet, useParams } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
+
+import "react-toastify/dist/ReactToastify.css";
+
 import axios from "axios";
 import "./jobDesc.css";
 import { AuthContext } from "../../context/auth-context";
@@ -15,13 +19,13 @@ const JobDesc = () => {
       const { data } = await axios.get(
         `http://localhost:3002/api/jobs/jobdesc/${jobId}`
       );
-      console.log(data.jobData);
       setJobData(data.jobData);
     };
     fetchData();
   }, []);
 
   const handleApply = async () => {
+    const id = toast.loading("Please wait...");
     try {
       const config = {
         headers: {
@@ -40,7 +44,35 @@ const JobDesc = () => {
         },
         config
       );
-    } catch (e) {}
+      toast.update(id, {
+        render: "Job added to applied jobs",
+        type: "success",
+        isLoading: false,
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+      });
+      setApplyed(true);
+    } catch (e) {
+      toast.update(id, {
+        render: e.response.data.message,
+        type: "error",
+        isLoading: false,
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+      });
+    }
   };
 
   return (
@@ -73,10 +105,12 @@ const JobDesc = () => {
               >
                 Apply Now
               </a>
-              {applyed && <p>Already Applied??</p>}
-              <a onClick={handleApply} class="contact-button">
-                Applied
-              </a>
+              {applyed && <p>Already Applied!!</p>}
+              {!applyed && (
+                <a href="#" onClick={handleApply} class="contact-button">
+                  Applied
+                </a>
+              )}
               <h3>Job Description</h3>
               <p>{jobData.jobDescription}</p>
             </div>

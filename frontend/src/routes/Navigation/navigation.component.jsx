@@ -18,7 +18,10 @@ const Navigation = () => {
               Explore
             </a>
             {auth.isLoggedIn && (
-              <a href="/appliedJobs" class="nav-link">
+              <a
+                href={auth.isLoggedIn ? "/appliedJobs" : "/auth"}
+                class="nav-link"
+              >
                 Applied Jobs
               </a>
             )}

@@ -13,7 +13,7 @@ import "react-toastify/dist/ReactToastify.css";
 
 const strengthLabels = ["weak", "medium", "strong"];
 
-export const Signup = ({ toggleHasAccount }) => {
+export const Signup = ({ toggleHasAccount, role }) => {
   const auth = useContext(AuthContext);
   const [strength, setStrength] = useState("");
   const [email, setEmail] = useState();
@@ -29,9 +29,10 @@ export const Signup = ({ toggleHasAccount }) => {
           "Content-type": "application/json",
         },
       };
+      console.log(role);
       const { data } = await axios.post(
         "http://localhost:3002/api/users/signup",
-        { email, password },
+        { email, password, role: role },
         config
       );
 
@@ -49,7 +50,7 @@ export const Signup = ({ toggleHasAccount }) => {
         theme: "colored",
       });
 
-      auth.login(data.userId, data.token);
+      auth.login(data.userId, data.token, data.role);
       navigate("/");
     } catch (e) {
       toast.update(id, {
@@ -105,41 +106,49 @@ export const Signup = ({ toggleHasAccount }) => {
 
   return (
     <>
-      <div className="login-card">
-        <img src={logo} />
-        <h2>Sign Up</h2>
-        <form className="login-form">
-          <div className="username">
+      <div className="signup-container">
+        <div className="login-card">
+          <img src={logo} />
+          {role == "Seeker" ? <h2>Sign Up</h2> : <h2>Become A Recruiter</h2>}
+          <form className="login-form">
+            <div className="username">
+              <input
+                autoComplete="off"
+                spellCheck="false"
+                className="control"
+                type="email"
+                placeholder="Email"
+                onChange={(e) => setEmail(e.target.value)}
+              />
+              <div id="spinner" className="spinner"></div>
+            </div>
             <input
-              autoComplete="off"
+              name="password"
               spellCheck="false"
               className="control"
-              type="email"
-              placeholder="Email"
-              onChange={(e) => setEmail(e.target.value)}
+              type="password"
+              placeholder="Password"
+              onChange={handleChange}
             />
-            <div id="spinner" className="spinner"></div>
-          </div>
-          <input
-            name="password"
-            spellCheck="false"
-            className="control"
-            type="password"
-            placeholder="Password"
-            onChange={handleChange}
-          />
 
-          <div className={`bars ${strength}`}>
-            <div></div>
-          </div>
-          <div className="strength">{strength && <>{strength} password</>}</div>
-          <button className="control" type="button" onClick={handleClick}>
-            JOIN NOW
-          </button>
-          <a href="" onClick={toggleHasAccount}>
-            Already have an account?
-          </a>
-        </form>
+            <div className={`bars ${strength}`}>
+              <div></div>
+            </div>
+            <div className="strength">
+              {strength && <>{strength} password</>}
+            </div>
+            <button className="control" type="button" onClick={handleClick}>
+              JOIN NOW
+            </button>
+            {role == "Seeker" ? (
+              <a href="" onClick={toggleHasAccount}>
+                Already have an account?
+              </a>
+            ) : (
+              ""
+            )}
+          </form>
+        </div>
       </div>
     </>
   );

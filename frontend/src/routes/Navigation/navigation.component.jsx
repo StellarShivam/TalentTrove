@@ -14,10 +14,10 @@ const Navigation = () => {
             <span class="logo-text">TalentTrove</span>
           </a>
           <nav class="nav">
-            <a href="#features" class="nav-link">
+            <a href="/" class="nav-link">
               Explore
             </a>
-            {auth.isLoggedIn && (
+            {auth.isLoggedIn && auth.role == "Seeker" && (
               <a
                 href={auth.isLoggedIn ? "/appliedJobs" : "/auth"}
                 class="nav-link"
@@ -25,15 +25,24 @@ const Navigation = () => {
                 Applied Jobs
               </a>
             )}
-            <a href="#blog" class="nav-link">
-              Post a Job
-            </a>
-            <a href="#about" class="nav-link">
-              About
-            </a>
+            {auth.isLoggedIn && auth.role == "Recruiter" && (
+              <a href="postJob" class="nav-link">
+                Post a Job
+              </a>
+            )}
+            {auth.isLoggedIn && auth.role == "Recruiter" && (
+              <a href="myJobs" class="nav-link">
+                View Your Jobs
+              </a>
+            )}
+            {(!auth.isLoggedIn || auth.role == "Seeker") && (
+              <a href="becomeRecruiter" class="nav-link">
+                Become a Recruiter
+              </a>
+            )}
             {!auth.isLoggedIn && (
               <a href="/auth" class="contact-button">
-                Create Account
+                SignUp
               </a>
             )}
             {auth.isLoggedIn && (

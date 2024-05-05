@@ -88,6 +88,7 @@ const AppliedJobs = () => {
                   </a>
                 </div>
               ))}
+            {jobs.length === 0 && <div>You have not applied anywhere!!!</div>}
           </div>
         </div>
       </div>

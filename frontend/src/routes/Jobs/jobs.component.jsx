@@ -374,6 +374,9 @@ const Jobs = () => {
                       Modify search criteria or create an alert to get relevant
                       jobs as soon as they’re posted
                     </p>
+                    <a href="jobAlert" class="contact-button">
+                      Create Job Alert
+                    </a>
                   </div>
                 </div>
               )}

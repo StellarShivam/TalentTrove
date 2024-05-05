@@ -16,9 +16,9 @@ exports.registerUser = (req, res, next) => {
     );
   }
 
-  const { email, password } = req.body;
+  const { email, password, role } = req.body;
 
-  if (!email || !password) {
+  if (!email || !password || !role) {
     return next(new HttpError("Please enter all required fields", 400));
   }
 
@@ -37,6 +37,7 @@ exports.registerUser = (req, res, next) => {
           const newUser = new User({
             email: email,
             password: hashedPw,
+            role: role,
           });
           return newUser.save();
         })
@@ -44,6 +45,7 @@ exports.registerUser = (req, res, next) => {
           res.status(201).json({
             userId: createdUser._id,
             email: createdUser.email,
+            role: createdUser.role,
             token: generateToken(createdUser._id),
           });
         })
@@ -90,6 +92,7 @@ exports.authUser = (req, res, next) => {
       res.json({
         userId: loadedUser._id,
         email: loadedUser.email,
+        role: loadedUser.role,
         token: generateToken(loadedUser._id),
       });
     })

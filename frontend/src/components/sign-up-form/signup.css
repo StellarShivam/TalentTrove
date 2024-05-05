@@ -112,3 +112,8 @@ button.control {
   text-transform: capitalize;
   color: #868b94;
 }
+
+.signup-container {
+  display: flex;
+  justify-content: center;
+}

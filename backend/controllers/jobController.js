@@ -1,4 +1,5 @@
 const Job = require("../models/jobModel");
+const JobRequest = require("../models/jobRequestModel");
 const User = require("../models/userModel");
 
 exports.fetchJobs = async (req, res, next) => {
@@ -103,4 +104,55 @@ exports.appliedJobs = async (req, res, next) => {
   const { userId } = req.user;
   const data = await User.findOne({ _id: userId });
   res.json({ appliedJobs: data.appliedJobs });
+};
+
+exports.createJob = async (req, res, next) => {
+  const { userId } = req.user;
+  const {
+    jobCategory,
+    jobTitle,
+    companyName,
+    location,
+    jobType,
+    jobDescription,
+  } = req.body;
+  const newJob = new Job({
+    jobCategory,
+    jobTitle,
+    companyName,
+    location,
+    jobType,
+    jobDescription,
+    creator: userId,
+  });
+
+  const data = await newJob.save();
+  const applyLink = `http://localhost:3000/jobdesc/${data._id}`;
+  const data2 = await Job.findById(data._id);
+  data2.applyLink = applyLink;
+  const updatedJob = await data2.save();
+  res.json({ job: updatedJob });
+};
+
+exports.fetchEmployeerJobs = async (req, res, next) => {
+  const { userId } = req.user;
+  const data = await Job.find({ creator: userId });
+  res.json({ myJobs: data });
+};
+
+exports.createJobAlert = async (req, res, next) => {
+  const { userId } = req.user;
+  const { jobCategory, location, jobType } = req.body;
+
+  const data = await User.findById(userId);
+  const email = data.email;
+  const newJobAlert = new JobRequest({
+    jobCategory,
+    location,
+    jobType,
+    email,
+    user: userId,
+  });
+  const newData = await newJobAlert.save();
+  res.json({ newData });
 };

@@ -44,7 +44,7 @@ const SignIn = ({ toggleHasAccount }) => {
         progress: undefined,
         theme: "colored",
       });
-      auth.login(data.userId, data.token);
+      auth.login(data.userId, data.token, data.role);
 
       navigate("/");
     } catch (e) {

@@ -7,15 +7,17 @@ const connectDB = require("./config/db");
 const jobRoutes = require("./routes/jobRoutes");
 const authRoutes = require("./routes/authRoutes");
 const scrapeData = require("./config/scrapeJobs");
+const checkMatchingJobs = require("./config/checkMatchingJobs");
 
 const app = express();
 dotenv.config();
 connectDB();
 
 // scrapeData.scrapeIndeed();
-// scrapeData.scrapeNaukri();
+// // scrapeData.scrapeNaukri();
 // scrapeData.scrapeInternshalaJobs();
 // scrapeData.scrapeInternshalaIntern();
+checkMatchingJobs();
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());

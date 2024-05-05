@@ -512,19 +512,19 @@ const scrapeInternshalaJobs = async () => {
 };
 
 const scrapeInternshalaIntern = async () => {
-  let browser = await puppeteer.launch({ headless: false });
-  const page = await browser.newPage();
-  let jobs = [];
-  let categoryLinks = createInternshalaInternLinks(jobCategoriesInternshala);
-  for (var i = 0; i < categoryLinks.length; i++) {
-    let temp = await scrapeInternshalaInternPage(categoryLinks[i], page);
-    jobs = [...jobs, ...temp];
-  }
-  for (var i = 0; i < jobs.length; i++) {
-    await scrapeIntershalaInternDescriptionPage(jobs[i], page);
-  }
-  //   await Job.deleteMany({});
-  await browser.close();
+  // let browser = await puppeteer.launch({ headless: false });
+  // const page = await browser.newPage();
+  // let jobs = [];
+  // let categoryLinks = createInternshalaInternLinks(jobCategoriesInternshala);
+  // for (var i = 0; i < categoryLinks.length; i++) {
+  //   let temp = await scrapeInternshalaInternPage(categoryLinks[i], page);
+  //   jobs = [...jobs, ...temp];
+  // }
+  // for (var i = 0; i < jobs.length; i++) {
+  //   await scrapeIntershalaInternDescriptionPage(jobs[i], page);
+  // }
+  await Job.deleteMany({});
+  // await browser.close();
 };
 
 module.exports = {

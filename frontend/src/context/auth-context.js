@@ -5,6 +5,7 @@ let logoutTimer;
 export const AuthContext = createContext({
   token: null,
   isLoggedIn: false,
+  role: null,
   userId: null,
   login: () => {},
   logout: () => {},
@@ -14,18 +15,22 @@ export const AuthProvider = ({ children }) => {
   const [token, setToken] = useState(false);
   const [userId, setUserId] = useState(null);
   const [tokenExpirationDate, setTokenExpirationDate] = useState();
+  const [role, setRole] = useState();
 
-  const login = useCallback((uid, token, expirationDate) => {
+  const login = useCallback((uid, token, role, expirationDate) => {
     setToken(token);
     setUserId(uid);
+    setRole(role);
     const tokenExpirationDate =
       expirationDate || new Date(new Date().getTime() + 1000 * 60 * 60);
     setTokenExpirationDate(tokenExpirationDate);
+
     localStorage.setItem(
       "userData",
       JSON.stringify({
         userId: uid,
         token: token,
+        role: role,
         expiration: tokenExpirationDate.toISOString(),
       })
     );
@@ -58,6 +63,7 @@ export const AuthProvider = ({ children }) => {
       login(
         storedData.userId,
         storedData.token,
+        storedData.role,
         new Date(storedData.expiration)
       );
     }
@@ -66,6 +72,7 @@ export const AuthProvider = ({ children }) => {
   const value = {
     isLoggedIn: !!token,
     token: token,
+    role: role,
     userId,
     login,
     logout,

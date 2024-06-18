@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { Outlet } from "react-router-dom";
+import { Outlet, Link } from "react-router-dom";
 import { AuthContext } from "../../context/auth-context";
 
 import "./navigation.css";
@@ -10,45 +10,45 @@ const Navigation = () => {
     <>
       <div class="header">
         <header class="header-content">
-          <a href="/" class="logo">
+          <Link to="/" class="logo">
             <span class="logo-text">TalentTrove</span>
-          </a>
+          </Link>
           <nav class="nav">
-            <a href="/" class="nav-link">
+            <Link to="/" class="nav-link">
               Explore
-            </a>
+            </Link>
             {auth.isLoggedIn && auth.role == "Seeker" && (
-              <a
-                href={auth.isLoggedIn ? "/appliedJobs" : "/auth"}
+              <Link
+                to={auth.isLoggedIn ? "/appliedJobs" : "/auth"}
                 class="nav-link"
               >
                 Applied Jobs
-              </a>
+              </Link>
             )}
             {auth.isLoggedIn && auth.role == "Recruiter" && (
-              <a href="postJob" class="nav-link">
+              <Link to="postJob" class="nav-link">
                 Post a Job
-              </a>
+              </Link>
             )}
             {auth.isLoggedIn && auth.role == "Recruiter" && (
-              <a href="myJobs" class="nav-link">
+              <Link to="myJobs" class="nav-link">
                 View Your Jobs
-              </a>
+              </Link>
             )}
             {(!auth.isLoggedIn || auth.role == "Seeker") && (
-              <a href="becomeRecruiter" class="nav-link">
+              <Link to="becomeRecruiter" class="nav-link">
                 Become a Recruiter
-              </a>
+              </Link>
             )}
             {!auth.isLoggedIn && (
-              <a href="/auth" class="contact-button">
+              <Link to="/auth" class="contact-button">
                 SignUp
-              </a>
+              </Link>
             )}
             {auth.isLoggedIn && (
-              <a href="/" onClick={auth.logout} class="contact-button">
+              <Link to="/" onClick={auth.logout} class="contact-button">
                 Log Out
-              </a>
+              </Link>
             )}
           </nav>
           <button type="button" class="menu-button">

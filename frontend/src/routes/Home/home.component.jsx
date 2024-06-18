@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { Outlet } from "react-router-dom";
+import { Outlet, Link } from "react-router-dom";
 import PhoneImage from "../../images/phones.png";
 import Icon from "../../images/PersonalizedLearn.svg";
 import InstaIcon from "../../images/instagram.svg";
@@ -27,12 +27,12 @@ const Home = () => {
               true potential.
             </p>
             <div class="button-group">
-              <a
-                href={auth.isLoggedIn ? "/jobs" : "/auth"}
+              <Link
+                to={auth.isLoggedIn ? "/jobs" : "/auth"}
                 class="start-button"
               >
                 Find a Job
-              </a>
+              </Link>
             </div>
           </div>
 

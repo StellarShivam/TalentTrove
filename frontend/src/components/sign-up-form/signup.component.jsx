@@ -109,7 +109,7 @@ export const Signup = ({ toggleHasAccount, role }) => {
       <div className="signup-container">
         <div className="login-card">
           <img src={logo} />
-          {role == "Seeker" ? <h2>Sign Up</h2> : <h2>Become A Recruiter</h2>}
+          {role == "seeker" ? <h2>Sign Up</h2> : <h2>Become A Recruiter</h2>}
           <form className="login-form">
             <div className="username">
               <input

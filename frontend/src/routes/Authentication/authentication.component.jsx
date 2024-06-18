@@ -1,26 +1,15 @@
 import React, { useState } from "react";
-import { Signup } from "../../components/sign-up-form/signup.component";
-import SignIn from "../../components/sign-in/signin.component";
+import AuthPreview from "../AuthPreview/authpreview.component";
 import "./authentication.css";
+import { Route, Routes } from "react-router-dom";
+import SignAuthPreview from "../SignAuthPreview/signauthpreview.component";
 
-const Authentication = ({ role }) => {
-  const [hasAccount, setHasAccount] = useState(false);
-
-  const toggleHasAccount = (e) => {
-    e.preventDefault();
-    setHasAccount(!hasAccount);
-  };
-  console.log(role);
+const Authentication = () => {
   return (
-    <>
-      <div className="auth-container">
-        {hasAccount ? (
-          <SignIn toggleHasAccount={toggleHasAccount} />
-        ) : (
-          <Signup toggleHasAccount={toggleHasAccount} role={role} />
-        )}
-      </div>
-    </>
+    <Routes>
+      <Route index element={<AuthPreview />} />
+      <Route path=":role" element={<SignAuthPreview />} />
+    </Routes>
   );
 };
 

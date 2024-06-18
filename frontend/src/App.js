@@ -21,11 +21,7 @@ const App = () => {
       <Routes>
         <Route path="/" element={<Navigation />}>
           <Route index element={<Home />} />
-          <Route path="auth" element={<Authentication role="Seeker" />} />
-          <Route
-            path="becomeRecruiter"
-            element={<Authentication role="Recruiter" />}
-          />
+          <Route path="auth/*" element={<Authentication />} />
           <Route path="jobAlert" element={<JobAlert />} />
           <Route path="jobs" element={<Jobs />} />
           <Route path="appliedJobs" element={<AppliedJobs />} />

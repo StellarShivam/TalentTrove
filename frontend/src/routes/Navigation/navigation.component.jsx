@@ -17,7 +17,7 @@ const Navigation = () => {
             <Link to="/" class="nav-link">
               Explore
             </Link>
-            {auth.isLoggedIn && auth.role == "Seeker" && (
+            {auth.isLoggedIn && auth.role == "seeker" && (
               <Link
                 to={auth.isLoggedIn ? "/appliedJobs" : "/auth"}
                 class="nav-link"
@@ -25,17 +25,17 @@ const Navigation = () => {
                 Applied Jobs
               </Link>
             )}
-            {auth.isLoggedIn && auth.role == "Recruiter" && (
+            {auth.isLoggedIn && auth.role == "recruiter" && (
               <Link to="postJob" class="nav-link">
                 Post a Job
               </Link>
             )}
-            {auth.isLoggedIn && auth.role == "Recruiter" && (
+            {auth.isLoggedIn && auth.role == "recruiter" && (
               <Link to="myJobs" class="nav-link">
                 View Your Jobs
               </Link>
             )}
-            {(!auth.isLoggedIn || auth.role == "Seeker") && (
+            {(!auth.isLoggedIn || auth.role == "seeker") && (
               <Link to="becomeRecruiter" class="nav-link">
                 Become a Recruiter
               </Link>

@@ -22,8 +22,8 @@ const App = () => {
         <Route path="/" element={<Navigation />}>
           <Route index element={<Home />} />
           <Route path="auth/*" element={<Authentication />} />
-          <Route path="jobAlert" element={<JobAlert />} />
-          <Route path="jobs" element={<Jobs />} />
+          {/* <Route path="jobAlert" element={<JobAlert />} /> */}
+          <Route path="jobs/*" element={<Jobs />} />
           <Route path="appliedJobs" element={<AppliedJobs />} />
           <Route path="jobdesc/:jobId" element={<JobDesc />} />
           <Route path="postJob" element={<PostJob />} />

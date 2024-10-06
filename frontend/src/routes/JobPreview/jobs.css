@@ -179,113 +179,112 @@ input {
   display: flex;
   flex-direction: column;
   gap: 1rem;
-}
+  .job-container {
+    height: 11rem;
+    border: 1px solid var(--gray);
+    display: flex;
+    /* flex-direction: column; */
+    justify-content: space-between;
+    width: 40rem;
+    border-radius: 0.2rem;
+    margin-left: 1rem;
+    box-shadow: 0 6px 12px #e7e7e7;
+    border: none;
+    background-color: white;
+  }
 
-.job-container {
-  height: 11rem;
-  border: 1px solid var(--gray);
-  display: flex;
-  /* flex-direction: column; */
-  justify-content: space-between;
-  width: 40rem;
-  border-radius: 0.2rem;
-  margin-left: 1rem;
-  box-shadow: 0 6px 12px #e7e7e7;
-  border: none;
-  background-color: white;
-}
+  .job-container:hover {
+    box-shadow: 0 6px 19px rgb(165, 164, 164);
+    transition: box-shadow 0.2s linear;
+  }
 
-.job-container:hover {
-  box-shadow: 0 6px 19px rgb(165, 164, 164);
-  transition: box-shadow 0.2s linear;
-}
+  .details {
+    border: 1px solid var(--gray);
+    width: 4rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--primary-color);
+    border-top-right-radius: 0.2rem;
+    border-bottom-right-radius: 0.2rem;
+    /* background-color: white; */
+    /* z-index: 2; */
+  }
 
-.details {
-  border: 1px solid var(--gray);
-  width: 4rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: var(--primary-color);
-  border-top-right-radius: 0.2rem;
-  border-bottom-right-radius: 0.2rem;
-  /* background-color: white; */
-  /* z-index: 2; */
-}
+  .fa-arrow-right {
+    color: white;
+  }
 
-.fa-arrow-right {
-  color: white;
-}
+  .job-brefing {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    text-align: left;
+    padding: 1rem;
+    width: -webkit-fill-available;
+  }
 
-.job-brefing {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  text-align: left;
-  padding: 1rem;
-  width: -webkit-fill-available;
-}
+  .job-type-div,
+  .location-div {
+    display: flex;
+    flex-direction: row;
+    gap: 0.5rem;
+    align-items: baseline;
+  }
 
-.job-type-div,
-.location-div {
-  display: flex;
-  flex-direction: row;
-  gap: 0.5rem;
-  align-items: baseline;
-}
+  .title {
+    font-size: 1.15rem;
+    font-weight: 600;
+    color: black;
+  }
 
-.title {
-  font-size: 1.15rem;
-  font-weight: 600;
-  color: black;
-}
+  .company {
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--gray);
+  }
 
-.company {
-  font-size: 0.9rem;
-  font-weight: 500;
-  color: var(--gray);
-}
+  .job-tags {
+    display: flex;
+    gap: 1rem;
+    font-size: 0.9rem;
+    font-weight: 400;
+    color: var(--gray);
+  }
 
-.job-tags {
-  display: flex;
-  gap: 1rem;
-  font-size: 0.9rem;
-  font-weight: 400;
-  color: var(--gray);
-}
+  .job-posted {
+    font-size: 0.9rem;
+    font-weight: 300;
+    color: var(--gray);
+  }
 
-.job-posted {
-  font-size: 0.9rem;
-  font-weight: 300;
-  color: var(--gray);
-}
+  .modal-location-filter {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    width: max-content;
+  }
 
-.modal-location-filter {
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  width: max-content;
-}
+  .no-jobs {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: white;
+    box-shadow: 0 6px 12px #e7e7e7;
+    padding: 1rem;
+    margin-left: 1rem;
+  }
 
-.no-jobs {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: white;
-  box-shadow: 0 6px 12px #e7e7e7;
-  padding: 1rem;
-  margin-left: 1rem;
-}
+  .pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+  }
 
-.pagination {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 1rem;
-}
-
-.pagination > button {
-  background-color: var(--primary-color);
-  padding: 1rem;
-  color: white;
-  border-radius: 0.2rem;
+  .pagination > button {
+    background-color: var(--primary-color);
+    padding: 1rem;
+    color: white;
+    border-radius: 0.2rem;
+  }
 }

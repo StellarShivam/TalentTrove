@@ -4,7 +4,6 @@ import { ToastContainer, toast } from "react-toastify";
 
 import "react-toastify/dist/ReactToastify.css";
 
-import "./jobs.css";
 import { Route, Routes } from "react-router-dom";
 
 import JobPreview from "../JobPreview/jobpreview.component";

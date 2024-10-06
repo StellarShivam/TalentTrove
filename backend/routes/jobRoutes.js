@@ -12,5 +12,10 @@ router.post("/addToAppliedJob", protect, jobController.addToJobApplied);
 router.post("/jobAlert", protect, jobController.createJobAlert);
 router.post("/e1/createJob", protect, jobController.createJob);
 router.get("/e1/myJobs", protect, jobController.fetchEmployeerJobs);
+router.put(
+  "/e1/myJobs/update/:jobId",
+  protect,
+  jobController.updateEmployeerJob
+);
 
 module.exports = router;

@@ -1,6 +1,8 @@
 import axios from "axios";
 import React, { useContext, useEffect, useState } from "react";
-import toast from "react-hot-toast";
+import { ToastContainer, toast } from "react-toastify";
+
+import "react-toastify/dist/ReactToastify.css";
 import { FaCheck } from "react-icons/fa6";
 import { RxCross2 } from "react-icons/rx";
 import { AuthContext } from "../../context/auth-context";
@@ -53,20 +55,50 @@ const MyJobs = () => {
   };
 
   //   //Function For Updating The Job
-  //   const handleUpdateJob = async (jobId) => {
-  //     const updatedJob = myJobs.find((job) => job._id === jobId);
-  //     await axios
-  //       .put(`http://localhost:4000/api/v1/job/update/${jobId}`, updatedJob, {
-  //         withCredentials: true,
-  //       })
-  //       .then((res) => {
-  //         toast.success(res.data.message);
-  //         setEditingMode(null);
-  //       })
-  //       .catch((error) => {
-  //         toast.error(error.response.data.message);
-  //       });
-  //   };
+  const handleUpdateJob = async (jobId) => {
+    const updatedJob = myJobs.find((job) => job._id === jobId);
+    const id = toast.loading("Please wait...");
+    try {
+      const config = {
+        headers: {
+          "Content-type": "application/json",
+        },
+      };
+      const { data } = await axios.put(
+        "http://localhost:3002/api/jobs/e1/myJobs/update/:jobId",
+        updatedJob,
+        config
+      );
+
+      toast.update(id, {
+        render: "Updated Successfully",
+        type: "success",
+        isLoading: false,
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+      });
+    } catch (e) {
+      toast.update(id, {
+        render: e.response.data.message,
+        type: "error",
+        isLoading: false,
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+      });
+    }
+  };
 
   //   //Function For Deleting Job
   //   const handleDeleteJob = async (jobId) => {
@@ -99,219 +131,207 @@ const MyJobs = () => {
           <h1>Your Posted Jobs</h1>
           {myJobs.length > 0 ? (
             <>
-              <div className="banner">
-                {myJobs.map((element) => (
-                  <div className="card" key={element._id}>
-                    <div className="content">
-                      <div className="short_fields">
-                        <div>
+              <div className="posted-jobs">
+                {myJobs.map((job) => (
+                  <div class="job-container">
+                    <div className="title">
+                      <h3>{job.jobTitle}</h3>
+                    </div>
+                    <div class="job-brefing">
+                      <div class="job-heading">
+                        {/* <p class="title">{job.jobTitle}</p> */}
+                        <div className="job-title">
                           <span>Title:</span>
                           <input
                             type="text"
-                            disabled={
-                              editingMode !== element._id ? true : false
+                            disabled={editingMode !== job._id ? true : false}
+                            value={job.jobTitle}
+                            onChange={(e) =>
+                              handleInputChange(
+                                job._id,
+                                "jobTitle",
+                                e.target.value
+                              )
                             }
-                            value={element.jobTitle}
+                          />
+                        </div>
+
+                        <div className="job-category">
+                          <span>Category:</span>
+                          <select
+                            value={job.jobCategory}
+                            onChange={(e) =>
+                              handleInputChange(
+                                job._id,
+                                "jobCategory",
+                                e.target.value
+                              )
+                            }
+                            disabled={editingMode !== job._id ? true : false}
+                          >
+                            <option value="machine-learning">
+                              machine-learning
+                            </option>
+                            <option value="artificial-intelligence">
+                              artificial-intelligence
+                            </option>
+                            <option value="devops">devops</option>
+                            <option value="web-development">
+                              web-development
+                            </option>
+                            <option value="front-end-development">
+                              front-end-development
+                            </option>
+                            <option value="backend-development">
+                              backend-development
+                            </option>
+                            <option value="full-stack-development">
+                              full-stack-development
+                            </option>
+                            <option value="software-development">
+                              software-development
+                            </option>
+                            <option value="android-app-development">
+                              android-app-development
+                            </option>
+                            <option value="ios-app-development">
+                              ios-app-development
+                            </option>
+                            <option value="data-analytics">
+                              data-analytics
+                            </option>
+                            <option value="data-science">data-science</option>
+                          </select>
+                        </div>
+
+                        <div className="job-location">
+                          <span>Location:</span>
+                          <input
+                            type="text"
+                            disabled={editingMode !== job._id ? true : false}
+                            value={job.location}
+                            onChange={(e) =>
+                              handleInputChange(
+                                job._id,
+                                "location",
+                                e.target.value
+                              )
+                            }
+                          />
+                        </div>
+
+                        <div className="job-salary">
+                          <span>Salary:</span>
+                          <input
+                            type="text"
+                            disabled={editingMode !== job._id ? true : false}
+                            // value={job.salary}
                             // onChange={(e) =>
                             //   handleInputChange(
-                            //     element._id,
-                            //     "title",
+                            //     job._id,
+                            //     "salary",
                             //     e.target.value
                             //   )
                             // }
                           />
                         </div>
 
-                        <div>
-                          <span>Category:</span>
-                          <select
-                            value={element.jobCategory}
-                            // onChange={(e) =>
-                            //   handleInputChange(
-                            //     element._id,
-                            //     "category",
-                            //     e.target.value
-                            //   )
-                            // }
-                            disabled={
-                              editingMode !== element._id ? true : false
-                            }
-                          >
-                            <option value="Graphics & Design">
-                              Graphics & Design
-                            </option>
-                            <option value="Mobile App Development">
-                              Mobile App Development
-                            </option>
-                            <option value="Frontend Web Development">
-                              Frontend Web Development
-                            </option>
-                            <option value="MERN Stack Development">
-                              MERN STACK Development
-                            </option>
-                            <option value="Account & Finance">
-                              Account & Finance
-                            </option>
-                            <option value="Artificial Intelligence">
-                              Artificial Intelligence
-                            </option>
-                            <option value="Video Animation">
-                              Video Animation
-                            </option>
-                            <option value="MEAN Stack Development">
-                              MEAN STACK Development
-                            </option>
-                            <option value="MEVN Stack Development">
-                              MEVN STACK Development
-                            </option>
-                            <option value="Data Entry Operator">
-                              Data Entry Operator
-                            </option>
-                          </select>
+                        <div className="job-type">
+                          <span>Job Type:</span>
+                          <div class="input-group">
+                            <input
+                              type="radio"
+                              id="job-full-time"
+                              name="job"
+                              value="full-time"
+                              disabled={editingMode !== job._id ? true : false}
+                              onChange={(e) =>
+                                handleInputChange(
+                                  job._id,
+                                  "jobType",
+                                  e.target.value
+                                )
+                              }
+                              checked={
+                                job.jobType === "full-time" ? true : false
+                              }
+                            />
+                            <label for="job-full-time">Full Time</label>
+                            <input
+                              type="radio"
+                              id="job-internship"
+                              name="job"
+                              value="internship"
+                              disabled={editingMode !== job._id ? true : false}
+                              onChange={(e) =>
+                                handleInputChange(
+                                  job._id,
+                                  "jobType",
+                                  e.target.value
+                                )
+                              }
+                              checked={
+                                job.jobType === "internship" ? true : false
+                              }
+                            />
+                            <label for="job-internship">Internship</label>
+                            <input
+                              type="radio"
+                              id="job-remote"
+                              name="job"
+                              value="remote"
+                              disabled={editingMode !== job._id ? true : false}
+                              onChange={(e) =>
+                                handleInputChange(
+                                  job._id,
+                                  "jobType",
+                                  e.target.value
+                                )
+                              }
+                              checked={job.jobType === "remote" ? true : false}
+                            />
+                            <label for="job-remote">Remote</label>
+                          </div>
                         </div>
-                        <div>
-                          <span>
-                            Salary:{" "}
-                            {element.fixedSalary ? (
-                              <input
-                                type="number"
-                                disabled={
-                                  editingMode !== element._id ? true : false
-                                }
-                                value={element.fixedSalary}
-                                // onChange={(e) =>
-                                //   handleInputChange(
-                                //     element._id,
-                                //     "fixedSalary",
-                                //     e.target.value
-                                //   )
-                                // }
-                              />
-                            ) : (
-                              <div>
-                                <input
-                                  type="number"
-                                  disabled={
-                                    editingMode !== element._id ? true : false
-                                  }
-                                  value={element.salaryFrom}
-                                  //   onChange={(e) =>
-                                  //     handleInputChange(
-                                  //       element._id,
-                                  //       "salaryFrom",
-                                  //       e.target.value
-                                  //     )
-                                  //   }
-                                />
-                                <input
-                                  type="number"
-                                  disabled={
-                                    editingMode !== element._id ? true : false
-                                  }
-                                  value={element.salaryTo}
-                                  //   onChange={(e) =>
-                                  //     handleInputChange(
-                                  //       element._id,
-                                  //       "salaryTo",
-                                  //       e.target.value
-                                  //     )
-                                  //   }
-                                />
-                              </div>
-                            )}
-                          </span>
-                        </div>
-                        <div>
-                          {" "}
-                          <span>Expired:</span>
-                          <select
-                            value={element.expired}
-                            // onChange={(e) =>
-                            //   handleInputChange(
-                            //     element._id,
-                            //     "expired",
-                            //     e.target.value
-                            //   )
-                            // }
-                            disabled={
-                              editingMode !== element._id ? true : false
-                            }
-                          >
-                            <option value={true}>TRUE</option>
-                            <option value={false}>FALSE</option>
-                          </select>
-                        </div>
-                      </div>
-                      <div className="long_field">
-                        <div>
+                        <div className="job-desc">
                           <span>Description:</span>{" "}
                           <textarea
                             rows={5}
-                            value={element.jobDescription}
-                            disabled={
-                              editingMode !== element._id ? true : false
+                            value={job.jobDescription}
+                            disabled={editingMode !== job._id ? true : false}
+                            onChange={(e) =>
+                              handleInputChange(
+                                job._id,
+                                "jobDescription",
+                                e.target.value
+                              )
                             }
-                            // onChange={(e) =>
-                            //   handleInputChange(
-                            //     element._id,
-                            //     "description",
-                            //     e.target.value
-                            //   )
-                            // }
                           />
                         </div>
-                        <div>
-                          <span>Location: </span>
-                          <textarea
-                            value={element.location}
-                            rows={5}
-                            disabled={
-                              editingMode !== element._id ? true : false
-                            }
-                            // onChange={(e) =>
-                            //   handleInputChange(
-                            //     element._id,
-                            //     "location",
-                            //     e.target.value
-                            //   )
-                            // }
-                          />
-                        </div>
-                      </div>
-                    </div>
-                    {/* Out Of Content Class */}
-                    <div className="button_wrapper">
-                      <div className="edit_btn_wrapper">
-                        {editingMode === element._id ? (
-                          <>
-                            <button
-                              //   onClick={() => handleUpdateJob(element._id)}
-                              className="check_btn"
-                            >
-                              <FaCheck />
-                            </button>
-                            <button
-                              //   onClick={() => handleDisableEdit()}
-                              className="cross_btn"
-                            >
-                              <RxCross2 />
-                            </button>
-                          </>
-                        ) : (
-                          <button
-                            // onClick={() => handleEnableEdit(element._id)}
-                            className="edit_btn"
-                          >
-                            Edit
+                        <div className="button-groups">
+                          <button class="contact-button" href="/">
+                            View Applicants
                           </button>
-                        )}
+                          {editingMode === job._id ? (
+                            <button
+                              class="contact-button"
+                              onClick={() => handleUpdateJob(job._id)}
+                            >
+                              Update
+                            </button>
+                          ) : (
+                            <button
+                              class="contact-button"
+                              onClick={() => handleEnableEdit(job._id)}
+                            >
+                              Edit
+                            </button>
+                          )}
+                          <button class="contact-button" href="/">
+                            Delete
+                          </button>
+                        </div>
                       </div>
-                      <button
-                        // onClick={() => handleDeleteJob(element._id)}
-                        className="delete_btn"
-                      >
-                        Delete
-                      </button>
                     </div>
                   </div>
                 ))}

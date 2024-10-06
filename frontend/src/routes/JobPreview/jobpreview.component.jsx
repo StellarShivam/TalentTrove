@@ -7,7 +7,7 @@ import "react-toastify/dist/ReactToastify.css";
 import Modal from "../../components/modal/modal.component";
 import Number from "../../components/AnimatedNumber/number.component";
 import axios from "axios";
-// import "./jobs.css";
+import "./jobs.css";
 import InstaIcon from "../../images/instagram.svg";
 import TwitterIcon from "../../images/twitter.svg";
 import LinkedInIcon from "../../images/linkedin.svg";
@@ -355,7 +355,7 @@ const JobPreview = () => {
                       <p class="job-posted">{job.jobPosted}</p>
                     </div>
                     <a
-                      href={`jobdesc/${job._id}`}
+                      href={`jobs/jobdesc/${job._id}`}
                       target="_blank"
                       class="details"
                     >

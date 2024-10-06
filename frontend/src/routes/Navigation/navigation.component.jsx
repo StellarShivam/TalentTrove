@@ -36,7 +36,7 @@ const Navigation = () => {
               </Link>
             )}
             {(!auth.isLoggedIn || auth.role == "seeker") && (
-              <Link to="becomeRecruiter" class="nav-link">
+              <Link to="/auth/recruiter" class="nav-link">
                 Become a Recruiter
               </Link>
             )}

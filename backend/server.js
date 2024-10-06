@@ -14,7 +14,7 @@ dotenv.config();
 connectDB();
 
 // scrapeData.scrapeIndeed();
-// // scrapeData.scrapeNaukri();
+// scrapeData.scrapeNaukri();
 // scrapeData.scrapeInternshalaJobs();
 // scrapeData.scrapeInternshalaIntern();
 checkMatchingJobs();

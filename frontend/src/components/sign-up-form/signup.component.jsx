@@ -140,13 +140,9 @@ export const Signup = ({ toggleHasAccount, role }) => {
             <button className="control" type="button" onClick={handleClick}>
               JOIN NOW
             </button>
-            {role == "Seeker" ? (
-              <a href="" onClick={toggleHasAccount}>
-                Already have an account?
-              </a>
-            ) : (
-              ""
-            )}
+            <a href="" onClick={toggleHasAccount}>
+              Already have an account?
+            </a>
           </form>
         </div>
       </div>

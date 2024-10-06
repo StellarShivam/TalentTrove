@@ -156,3 +156,32 @@ exports.createJobAlert = async (req, res, next) => {
   const newData = await newJobAlert.save();
   res.json({ newData });
 };
+
+exports.updateEmployeerJob = async (req, res, next) => {
+  const jobId = req.params.jobId;
+  const jobTitle = req.body.jobTitle;
+  const jobCategory = req.body.jobCategory;
+  const location = req.body.location;
+  const salary = req.body.salary;
+  const jobType = req.body.jobType;
+  const jobDescription = req.body.jobDescription;
+
+  Job.findById(jobId)
+    .then((job) => {
+      job.jobDescription = jobDescription;
+      job.jobTitle = jobTitle;
+      job.jobCategory = jobCategory;
+      job.location = location;
+      job.jobType = jobType;
+      return job.save();
+    })
+    .then((result) => {
+      res.status(200).json({ message: "Post updated!", post: result });
+    })
+    .catch((err) => {
+      if (!err.statusCode) {
+        err.statusCode = 500;
+      }
+      next(err);
+    });
+};
